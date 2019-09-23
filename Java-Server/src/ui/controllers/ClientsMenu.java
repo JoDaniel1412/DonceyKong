@@ -15,7 +15,6 @@ public class ClientsMenu {
     public JFXTabPane clientsTabPane;
 
     private Game game;
-    private ClientTab clientTab;
     private List<ClientTab> clientsTab = new ArrayList<>();
 
     @FXML
@@ -24,7 +23,7 @@ public class ClientsMenu {
     }
 
     public void createClientTab(String name) {
-        clientTab = new ClientTab(name);
+        ClientTab clientTab = new ClientTab(name);
         clientTab.setGameId(name);
         clientTab.load();
 
@@ -35,8 +34,9 @@ public class ClientsMenu {
     public void updateGameView() {
         Platform.runLater(() -> {
             for (ClientTab clientTab : clientsTab) {
+                if (clientTab == null) continue;
                 if (clientTab.getGameId().equals(game.getId().toString())) {
-                    clientTab.getGameView().update(game);
+                    clientTab.updateGameView(game);
                     break;
                 }
             }

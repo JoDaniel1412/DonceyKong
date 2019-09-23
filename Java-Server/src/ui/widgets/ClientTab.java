@@ -1,9 +1,13 @@
 package ui.widgets;
 
+import game.Game;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class ClientTab extends Tab {
 
@@ -11,6 +15,7 @@ public class ClientTab extends Tab {
     private Pane pane;
     private GameView gameView;
     private String gameId;
+    private Timeline killer;
 
     public ClientTab(String name) {
         this.name = name;
@@ -23,6 +28,18 @@ public class ClientTab extends Tab {
         loadGameView();
         loadAutoButton();
         setContent(pane);
+        startKiller();
+    }
+
+    public void updateGameView(Game game) {
+        gameView.update(game);
+
+        if (killer != null) killer.stop();
+        startKiller();
+    }
+
+    private void close() {
+        this.getTabPane().getTabs().remove(this);
     }
 
     private void loadAutoButton() {
@@ -54,6 +71,13 @@ public class ClientTab extends Tab {
         fruit.load();
 
         pane.getChildren().addAll(croco, fruit);
+    }
+
+    private void startKiller() {
+        killer = new Timeline(new KeyFrame(
+                Duration.seconds(5),
+                e -> close()));
+        killer.play();
     }
 
     private void autoButtonPressed(Boolean selected) {
