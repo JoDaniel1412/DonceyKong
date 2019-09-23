@@ -10,6 +10,7 @@ public class ClientTab extends Tab {
     private String name;
     private Pane pane;
     private GameView gameView;
+    private String gameId;
 
     public ClientTab(String name) {
         this.name = name;
@@ -61,5 +62,13 @@ public class ClientTab extends Tab {
 
     public GameView getGameView() {
         return gameView;
+    }
+
+    public String getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(String gameId) {
+        this.gameId = gameId;
     }
 }

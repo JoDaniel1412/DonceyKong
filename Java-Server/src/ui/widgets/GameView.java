@@ -73,8 +73,6 @@ public class GameView extends Pane {
         imgView.relocate(x, y);
         imgView.setFitWidth(entity.getWidth());
         imgView.setFitHeight(entity.getHeight());
-        if(entity.getType().equals("rope") || entity.getType().equals("platform"))
-            imgView.setStyle("-fx-opacity: 0.5");
 
         return imgView;
     }
