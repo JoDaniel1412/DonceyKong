@@ -93,8 +93,8 @@ void createRopes(){
     for(int i = 0; i < AMOUNT_OF_ROPES; i++) {
         ropes[i] = initializeRope(0, ROPE_X_POSITION[i], ROPE_Y_POSITION[i], ROPE_X_POSITION[i], ROPE_Y_POSITION[i],
                                   "rope", setBitmap(imgPath), ROPE_WIDTH, ROPE_HEIGHT);
-        ropes[i]->width = ROPE_WIDTH;
-        ropes[i]->height = ROPE_HEIGHT;
+        ropes[i]->entity->width = ROPE_WIDTH;
+        ropes[i]->entity->height = ROPE_HEIGHT;
     }
     free(imgPath);
 }
@@ -169,7 +169,7 @@ int gameLoop(){
         if(isCollidingWithCroco(junior, crocos) || junior->entity->y > GW_HEIGHT)
             playing = FALSE;
 
-        if (timer > 100000) {
+        if (timer > 200000) {
             clientUpdate();
             timer = 0;
         }
