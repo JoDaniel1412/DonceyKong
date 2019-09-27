@@ -35,6 +35,7 @@ void initializeWidgets(ALLEGRO_DISPLAY *gameWindowDisplay){
     createPlatforms();
     createRopes();
     crocos = initializeList();
+    crocosList = crocos;
 
     donkey = initializeEntity(0, DK_X_POS, DK_Y_POS, DK_X_POS, DK_Y_POS, "donkey", setBitmap("../sprites/dk.png"));
     key = initializeEntity(0, KEY_X_POS, KEY_Y_POS, KEY_X_POS, KEY_Y_POS, "key", setBitmap("../sprites/key.png"));

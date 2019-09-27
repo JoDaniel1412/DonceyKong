@@ -32,6 +32,7 @@ public class Game {
         donkey.parse(jsonDonkey.toString());
         parseArray(jsonEntities.getJSONArray("platforms"));
         parseArray(jsonEntities.getJSONArray("ropes"));
+        parseArray(jsonEntities.getJSONArray("crocos"));
 
         entities.add(junior);
         entities.add(key);
