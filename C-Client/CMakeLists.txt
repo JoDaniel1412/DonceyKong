@@ -17,6 +17,8 @@ add_executable(C-Client
         src/lib/json.c
         src/lib/json-builder.h
         src/lib/json-builder.c
+        src/lib/cJSON.h
+        src/lib/cJSON.c
 
         src/game/entities/Entity.h
         src/game/entities/Entity.c

@@ -43,7 +43,7 @@ class ClientSocket extends Thread {
         try {
             out = new PrintWriter(socket.getOutputStream());
 
-            out.println(message);
+            out.println(message + "\0");
             out.flush();
             System.out.printf("Server send: %s \n", message);
 

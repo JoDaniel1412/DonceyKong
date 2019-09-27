@@ -18,7 +18,9 @@
 #include "../../client/Client.h"
 #include "../entities/Rope.h"
 #include "../../datastructures/LinkedList.h"
-
+#include "CollisionHandler.h"
+#include "../../lib/json.h"
+#include "../../lib/cJSON.h"
 
 Junior *junior;
 Entity *donkey;
@@ -37,7 +39,8 @@ ALLEGRO_EVENT_QUEUE* setEventQueue(ALLEGRO_DISPLAY *gameWindowDisplay, ALLEGRO_T
 void createJunior();
 void createPlatforms();
 void createRopes();
-void createCroco(int ropeNumber, int isRedCroco);
+void createCroco(int ropeNumber, int isRedCroco, int Id);
+void createCrocoID(int ropeNumber, int isRedCroco, int Id);
 int getRopePosition(int ropeColumn);
 ALLEGRO_BITMAP* setBitmap(char* imgPath);
 int gameLoop();
@@ -47,4 +50,5 @@ void deleteWidgets();
 void closeGameWindow(ALLEGRO_DISPLAY *gameWindowDisplay);
 void clientUpdate();
 char *serializeGame();
+void parseGame(json_char *json);
 #endif //C_CLIENT_GAMEWINDOW_H
