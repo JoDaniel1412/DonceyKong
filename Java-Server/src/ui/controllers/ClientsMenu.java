@@ -46,4 +46,8 @@ public class ClientsMenu {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    public List<ClientTab> getClientsTab() {
+        return clientsTab;
+    }
 }
