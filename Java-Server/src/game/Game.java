@@ -40,7 +40,6 @@ public class Game {
         entities.add(junior);
         entities.add(key);
         entities.add(donkey);
-
     }
 
     private void parseArray(JSONArray jsonArray) {

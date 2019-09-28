@@ -37,7 +37,6 @@ public class GameView extends Pane {
             float y = entity.getRy() * height;
 
             ImageView imgView = chooseImg(entity, x, y);
-            //if (entity.getType().equals("rope")) continue;
             
             this.getChildren().add(imgView);
         }

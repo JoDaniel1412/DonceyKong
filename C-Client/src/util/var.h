@@ -14,7 +14,6 @@
 #define PLATFORM_HEIGHT 25.0f
 #define JR_WIDTH 100.0f
 #define JR_HEIGHT 57.0f
-#define ROPE_WIDTH 35.0f
 #define DONKEY_WIDTH 190.0f
 #define DONKEY_HEIGHT 122.0f
 #define ROPE_WIDTH 25.0f

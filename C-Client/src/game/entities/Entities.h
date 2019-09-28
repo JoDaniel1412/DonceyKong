@@ -11,6 +11,7 @@
 #include "../../json/json.h"
 
 LinkedList *crocosList;
+LinkedList *fruitsList;
 
 /*
  * Function serialized the game entities

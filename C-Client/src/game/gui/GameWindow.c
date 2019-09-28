@@ -37,6 +37,9 @@ void initializeWidgets(ALLEGRO_DISPLAY *gameWindowDisplay){
     crocos = initializeList();
     fruits = initializeList();
 
+    crocosList = crocos;
+    fruitsList = fruits;
+
     donkey = initializeEntity(0, DK_X_POS, DK_Y_POS, DK_X_POS, DK_Y_POS, "donkey", setBitmap("../sprites/dk.png"));
     key = initializeEntity(0, KEY_X_POS, KEY_Y_POS, KEY_X_POS, KEY_Y_POS, "key", setBitmap("../sprites/key.png"));
 
@@ -116,7 +119,7 @@ void createCroco(int ropeNumber, int isRedCroco, int Id){
     insertNode(crocos, node);
 }
 
-void createFruit(int ropeNumber){
+void createFruit(int ropeNumber, int id){
     Fruit *fruit = (Fruit*) malloc(sizeof(Fruit));
     char *imgPath = "../sprites/fruit.png";
     fruit->rope = ropes[getRopePosition(ropeNumber + 1) - 1];
@@ -127,6 +130,7 @@ void createFruit(int ropeNumber){
                                      setBitmap(imgPath));
     fruit->entity->width = FRUIT_WIDTH;
     fruit->entity->height = FRUIT_HEIGHT;
+    fruit->entity->id = id;
     Node *node = initializeNode(fruit);
     insertNode(fruits, node);
 }
@@ -141,6 +145,18 @@ void createCrocoID(int ropeNumber, int isRedCroco, int Id) {
         tmp = tmp->nextNode;
     }
     createCroco(ropeNumber, isRedCroco, Id);
+}
+
+void createFruitID(int ropeNumber, int id) {
+    int size = fruits->amountOfNodes;
+
+    Node *tmp = NULL;
+    if (size > 0) tmp = fruits->head;
+    for (int i = 0; i < size; ++i) {
+        if (((Fruit *) tmp->data)->entity->id == id) return;
+        tmp = tmp->nextNode;
+    }
+    createFruit(ropeNumber, id);
 }
 
 int getRopePosition(int ropeColumn){
@@ -295,6 +311,7 @@ void parseGame(json_char *json) {
     cJSON *jsonFruits = cJSON_DetachItemFromObject(jsonObj, "fruits");
     cJSON_ArrayForEach(fruit, jsonFruits) {
         int rope = cJSON_GetObjectItem(fruit, "rope")->valueint;
-        //createCroco(rope, 0);
+        int id = cJSON_GetObjectItem(fruit, "id")->valueint;
+        createFruitID(rope, id);
     }
 }

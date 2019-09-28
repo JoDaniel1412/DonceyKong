@@ -46,9 +46,10 @@ ALLEGRO_EVENT_QUEUE* setEventQueue(ALLEGRO_DISPLAY *gameWindowDisplay, ALLEGRO_T
 void createJunior();
 void createPlatforms();
 void createRopes();
-void createCroco(int ropeNumber, int isRedCroco);
-void createFruit(int ropeNumber);
+void createCroco(int ropeNumber, int isRedCroco, int id);
+void createFruit(int ropeNumber, int id);
 void createCrocoID(int ropeNumber, int isRedCroco, int Id);
+void createFruitID(int ropeNumber, int id);
 int getRopePosition(int ropeColumn);
 ALLEGRO_BITMAP* setBitmap(char* imgPath);
 int gameLoop();
