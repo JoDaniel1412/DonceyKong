@@ -10,7 +10,7 @@
 #include "../entities/Rope.h"
 #include "../entities/Fruit.h"
 
-int isCollidingWithPlatform(Junior *junior, Platform **platforms);
+int isCollidingWithPlatform(Entity *entity, Platform **platforms);
 int isCollidingWithRope(Junior *junior, Rope **ropes);
 int isCollindingWithKey(Junior *junior, Entity *key);
 int isCollidingWithCroco(Junior *junior, LinkedList *crocos);
