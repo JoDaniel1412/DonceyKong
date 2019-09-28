@@ -36,7 +36,21 @@ void initializeWidgets(ALLEGRO_DISPLAY *gameWindowDisplay){
     createPlatforms();
     createRopes();
     crocos = initializeList();
+    fruits = initializeList();
+    createCroco(0, FALSE);
+    createCroco(1, FALSE);
     createCroco(2, FALSE);
+    createCroco(3, FALSE);
+    createCroco(8, FALSE);
+    createFruit(8);
+    createFruit(7);
+    createFruit(6);
+    createFruit(5);
+    createFruit(4);
+    createFruit(3);
+    createFruit(2);
+    createFruit(1);
+    createFruit(0);
 
     donkey = initializeEntity(0, DK_X_POS, DK_Y_POS, DK_X_POS, DK_Y_POS, "donkey", setBitmap("../sprites/dk.png"));
     key = initializeEntity(0, KEY_X_POS, KEY_Y_POS, KEY_X_POS, KEY_Y_POS, "key", setBitmap("../sprites/key.png"));
@@ -116,7 +130,23 @@ void createCroco(int ropeNumber, int isRedCroco){
     insertNode(crocos, node);
 }
 
+void createFruit(int ropeNumber){
+    Fruit *fruit = (Fruit*) malloc(sizeof(Fruit));
+    char *imgPath = "../sprites/fruit.png";
+    fruit->rope = ropes[getRopePosition(ropeNumber + 1) - 1];
+
+
+    fruit->entity = initializeEntity(1, fruit->rope->entity->x, fruit->rope->entity->y + 10,
+                                     fruit->rope->entity->x, fruit->rope->entity->y + 10, "fruit",
+                                     setBitmap(imgPath));
+    fruit->entity->width = FRUIT_WIDTH;
+    fruit->entity->height = FRUIT_HEIGHT;
+    Node *node = initializeNode(fruit);
+    insertNode(fruits, node);
+}
+
 int getRopePosition(int ropeColumn){
+    if(ropeColumn >= ROPE_COLUMNS) return AMOUNT_OF_ROPES;
     float prevX = -1.0f;
     int ropeNumber = -1;
     for(int i = 0; i < AMOUNT_OF_ROPES; i++){
@@ -150,6 +180,7 @@ int gameLoop(){
         notMov(junior, keyState);
         moveJrRight(junior, keyState);
         moveJrLeft(junior, keyState);
+        isCollidingWithFruit(junior, fruits);
         if(!jumping) falling = moveJrDown(junior, keyState, platforms, ropes);
         if(!falling) jumping = moveJrUp(junior, keyState, &jumpCount, jumping, platforms, ropes);
         for(Node *crocoNode = crocos->head; crocoNode != NULL; crocoNode = crocoNode->nextNode) {
@@ -197,6 +228,8 @@ void redrawDisplay(){
         drawBitmap(ropes[i]->entity);
     for(Node *node = crocos->head; node != NULL; node = node->nextNode)
         drawBitmap(((Croco*)node->data)->entity);
+    for(Node *node = fruits->head; node != NULL; node = node->nextNode)
+        drawBitmap(((Fruit*)node->data)->entity);
     drawBitmap(junior->entity);
     drawBitmap(donkey);
     drawBitmap(key);

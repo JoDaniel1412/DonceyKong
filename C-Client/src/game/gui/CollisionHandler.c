@@ -46,7 +46,19 @@ int isCollidingWithCroco(Junior *junior, LinkedList *crocos){
         float xCroco = ((Croco*)crocoNode->data)->entity->x;
         float yCroco = ((Croco*)crocoNode->data)->entity->y;
         if ((xJr + JR_WIDTH) > xCroco && xJr < (xCroco + CROCO_WIDTH) &&
-                (yCroco + CROCO_HEIGHT) > yJr && yCroco < (yJr + JR_HEIGHT))
+            (yCroco + CROCO_HEIGHT) > yJr && yCroco < (yJr + JR_HEIGHT))
             return TRUE;
     }return FALSE;
+}
+
+void isCollidingWithFruit(Junior *junior, LinkedList *fruits){
+    float xJr = junior->entity->x;
+    float yJr = junior->entity->y;
+    for(Node *fruitNode = fruits->head; fruitNode != NULL; fruitNode = fruitNode->nextNode){
+        float xFruit = ((Fruit*)fruitNode->data)->entity->x;
+        float yFruit = ((Fruit*)fruitNode->data)->entity->y;
+        if ((xJr + JR_WIDTH) > xFruit && xJr < (xFruit + CROCO_WIDTH) &&
+            (yFruit + FRUIT_HEIGHT) > yJr && yFruit < (yJr + JR_HEIGHT))
+            deleteNode(fruits, fruitNode);
+    }
 }

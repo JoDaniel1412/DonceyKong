@@ -8,7 +8,8 @@
 #include "Entity.h"
 
 typedef struct {
-    Entity entity;
+    Entity *entity;
+    Rope *rope;
 } Fruit;
 
 #endif //C_CLIENT_FRUIT_H
