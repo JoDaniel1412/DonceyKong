@@ -9,7 +9,7 @@
 #include "Rope.h"
 
 typedef struct {
-    Entity entity;
+    Entity *entity;
     Rope *rope;
 } Fruit;
 
