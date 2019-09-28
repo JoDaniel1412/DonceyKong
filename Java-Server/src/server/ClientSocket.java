@@ -4,6 +4,10 @@ import java.io.*;
 import java.net.Socket;
 import java.util.TimerTask;
 
+/**
+ * Manages the clients connections and IOStream
+ * @author José Acuña
+ */
 class ClientSocket extends Thread {
 
     private Socket socket;
@@ -21,6 +25,11 @@ class ClientSocket extends Thread {
         stopListening();
     }
 
+    /**
+     * Receives InputStream from the socket
+     * last modified: 19 Set by Jose Acuna
+     * @return creates a response for the Client and returns it as a String
+     */
     private String listen() {
         String message = "";
         try {
@@ -39,6 +48,11 @@ class ClientSocket extends Thread {
         return message;
     }
 
+    /**
+     * Output the given message to the client
+     * last modified: 19 Set by Jose Acuna
+     * @param message the response to send
+     */
     private void response(String message) {
         try {
             out = new PrintWriter(socket.getOutputStream());
