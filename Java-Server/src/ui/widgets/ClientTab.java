@@ -13,12 +13,14 @@ import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ClientTab extends Tab {
 
     private String name;
     private Pane pane;
     private GameView gameView;
+    private RadioButton autoButton;
     private String gameId;
     private Timeline killer;
     private List<Croco> crocos = new ArrayList<>();
@@ -50,12 +52,12 @@ public class ClientTab extends Tab {
     }
 
     private void loadAutoButton() {
-        RadioButton radioButton = new RadioButton("Auto");
-        radioButton.relocate(900, 680);
-        radioButton.setOnMousePressed(
-                event -> autoButtonPressed(!radioButton.selectedProperty().getValue()));
+        autoButton = new RadioButton("Auto");
+        autoButton.relocate(900, 680);
+        autoButton.setOnMousePressed(
+                event -> autoButtonPressed(!autoButton.selectedProperty().getValue()));
 
-        pane.getChildren().add(radioButton);
+        pane.getChildren().add(autoButton);
     }
 
     private void loadGameView() {
@@ -84,6 +86,25 @@ public class ClientTab extends Tab {
         pane.getChildren().addAll(croco, fruit);
     }
 
+    private void checkAutoButton() {
+        new Timeline(new KeyFrame(
+                Duration.seconds(2),
+                e -> checkAutoButton())).play();
+
+        if (autoButton.isSelected()) createRandomEntity();
+    }
+
+    private void createRandomEntity() {
+        Random rand = new Random();
+        int rope = rand.nextInt(9);
+        boolean croco = rand.nextBoolean();
+
+        if (croco)
+            crocos.add(new Croco(crocos.size(), "croco", rope));
+        else
+            fruits.add(new Fruit(fruits.size(), "fruit", rope));
+    }
+
     private void startKiller() {
         killer = new Timeline(new KeyFrame(
                 Duration.seconds(5),
@@ -93,6 +114,7 @@ public class ClientTab extends Tab {
 
     private void autoButtonPressed(Boolean selected) {
         System.out.println(selected);
+        checkAutoButton();
     }
 
     public GameView getGameView() {
