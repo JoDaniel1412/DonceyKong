@@ -7,6 +7,7 @@
 
 #include "Entity.h"
 #include "Junior.h"
+#include "../../json/json.h"
 
 LinkedList *crocosList;
 

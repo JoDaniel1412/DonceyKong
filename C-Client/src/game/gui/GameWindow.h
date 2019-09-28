@@ -19,8 +19,8 @@
 #include "../entities/Rope.h"
 #include "../../datastructures/LinkedList.h"
 #include "CollisionHandler.h"
-#include "../../lib/json.h"
-#include "../../lib/cJSON.h"
+#include "../../json/json.h"
+#include "../../json/cJSON.h"
 
 Junior *junior;
 Entity *donkey;
