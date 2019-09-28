@@ -14,6 +14,7 @@
 #define PLATFORM_HEIGHT 25.0f
 #define JR_WIDTH 100.0f
 #define JR_HEIGHT 57.0f
+#define ROPE_WIDTH 35.0f
 #define DONKEY_WIDTH 190.0f
 #define DONKEY_HEIGHT 122.0f
 #define ROPE_WIDTH 25.0f
@@ -29,7 +30,7 @@
 #define JR_Y_INITIAL 420
 #define JR_ANIM_TIME 100000
 
-#define DK_X_POS 40
+#define DK_X_POS 50
 #define DK_Y_POS 0
 
 #define KEY_X_POS 260

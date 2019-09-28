@@ -2,7 +2,6 @@
 // Created by Erick Barrantes on 9/19/2019.
 //
 #include "GameWindow.h"
-#include "CollisionHandler.h"
 
 
 void createGameWindow(){
@@ -37,20 +36,6 @@ void initializeWidgets(ALLEGRO_DISPLAY *gameWindowDisplay){
     createRopes();
     crocos = initializeList();
     fruits = initializeList();
-    createCroco(0, FALSE);
-    createCroco(1, FALSE);
-    createCroco(2, FALSE);
-    createCroco(3, FALSE);
-    createCroco(8, FALSE);
-    createFruit(8);
-    createFruit(7);
-    createFruit(6);
-    createFruit(5);
-    createFruit(4);
-    createFruit(3);
-    createFruit(2);
-    createFruit(1);
-    createFruit(0);
 
     donkey = initializeEntity(0, DK_X_POS, DK_Y_POS, DK_X_POS, DK_Y_POS, "donkey", setBitmap("../sprites/dk.png"));
     key = initializeEntity(0, KEY_X_POS, KEY_Y_POS, KEY_X_POS, KEY_Y_POS, "key", setBitmap("../sprites/key.png"));
@@ -107,13 +92,13 @@ void createRopes(){
     for(int i = 0; i < AMOUNT_OF_ROPES; i++) {
         ropes[i] = initializeRope(0, ROPE_X_POSITION[i], ROPE_Y_POSITION[i], ROPE_X_POSITION[i], ROPE_Y_POSITION[i],
                                   "rope", setBitmap(imgPath), ROPE_WIDTH, ROPE_HEIGHT);
-        ropes[i]->width = ROPE_WIDTH;
-        ropes[i]->height = ROPE_HEIGHT;
+        ropes[i]->entity->width = ROPE_WIDTH;
+        ropes[i]->entity->height = ROPE_HEIGHT;
     }
     free(imgPath);
 }
 
-void createCroco(int ropeNumber, int isRedCroco){
+void createCroco(int ropeNumber, int isRedCroco, int Id){
     Croco *croco = (Croco*) malloc(sizeof(Croco));
     char *imgPath;
     if(isRedCroco)
@@ -124,6 +109,7 @@ void createCroco(int ropeNumber, int isRedCroco){
                                       setBitmap(imgPath));
     croco->entity->width = CROCO_WIDTH;
     croco->entity->height = CROCO_HEIGHT;
+    croco->entity->id = Id;
     croco->isRedCroco = isRedCroco;
     croco->rope = ropes[getRopePosition(ropeNumber)];
     Node *node = initializeNode(croco);
@@ -143,6 +129,18 @@ void createFruit(int ropeNumber){
     fruit->entity->height = FRUIT_HEIGHT;
     Node *node = initializeNode(fruit);
     insertNode(fruits, node);
+}
+
+void createCrocoID(int ropeNumber, int isRedCroco, int Id) {
+    int size = crocos->amountOfNodes;
+
+    Node *tmp = NULL;
+    if (size > 0) tmp = crocos->head;
+    for (int i = 0; i < size; ++i) {
+        if (((Croco *) tmp->data)->entity->id == Id) return;
+        tmp = tmp->nextNode;
+    }
+    createCroco(ropeNumber, isRedCroco, Id);
 }
 
 int getRopePosition(int ropeColumn){
@@ -200,7 +198,7 @@ int gameLoop(){
         if(isCollidingWithCroco(junior, crocos) || junior->entity->y > GW_HEIGHT)
             playing = FALSE;
 
-        if (timer > 300000) {
+        if (timer > 200000) {
             clientUpdate();
             timer = 0;
         }
@@ -262,7 +260,8 @@ void clientUpdate() {
     updateRPoss(donkey);
     updateRPoss(key);
 
-    message(serializeGame());
+    char *response = message(serializeGame());
+    parseGame(response);
 }
 
 char *serializeGame() {
@@ -277,4 +276,25 @@ char *serializeGame() {
     json_char *buf = malloc(json_measure(obj));
     json_serialize(buf, obj);
     return buf;
+}
+
+
+void parseGame(json_char *json) {
+    cJSON *jsonObj = cJSON_Parse(json);
+    if (jsonObj == NULL) return;
+
+    cJSON *croco;
+    cJSON *jsonCrocos = cJSON_DetachItemFromObject(jsonObj, "crocos");
+    cJSON_ArrayForEach(croco, jsonCrocos) {
+        int rope = cJSON_GetObjectItem(croco, "rope")->valueint;
+        int id = cJSON_GetObjectItem(croco, "id")->valueint;
+        createCrocoID(rope, 0, id);
+    }
+
+    cJSON *fruit;
+    cJSON *jsonFruits = cJSON_DetachItemFromObject(jsonObj, "fruits");
+    cJSON_ArrayForEach(fruit, jsonFruits) {
+        int rope = cJSON_GetObjectItem(fruit, "rope")->valueint;
+        //createCroco(rope, 0);
+    }
 }

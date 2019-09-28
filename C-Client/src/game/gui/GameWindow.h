@@ -18,8 +18,10 @@
 #include "../../client/Client.h"
 #include "../entities/Rope.h"
 #include "../../datastructures/LinkedList.h"
+#include "CollisionHandler.h"
+#include "../../json/json.h"
+#include "../../json/cJSON.h"
 #include "../entities/Fruit.h"
-
 
 Junior *junior;
 Entity *donkey;
@@ -46,7 +48,7 @@ void createPlatforms();
 void createRopes();
 void createCroco(int ropeNumber, int isRedCroco);
 void createFruit(int ropeNumber);
-unsigned int rand_interval(unsigned int min, unsigned int max);
+void createCrocoID(int ropeNumber, int isRedCroco, int Id);
 int getRopePosition(int ropeColumn);
 ALLEGRO_BITMAP* setBitmap(char* imgPath);
 int gameLoop();
@@ -56,4 +58,5 @@ void deleteWidgets();
 void closeGameWindow(ALLEGRO_DISPLAY *gameWindowDisplay);
 void clientUpdate();
 char *serializeGame();
+void parseGame(json_char *json);
 #endif //C_CLIENT_GAMEWINDOW_H
