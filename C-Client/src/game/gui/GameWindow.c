@@ -135,30 +135,6 @@ void createFruit(int ropeNumber, int id){
     insertNode(fruits, node);
 }
 
-void createCrocoID(int ropeNumber, int isRedCroco, int Id) {
-    int size = crocos->amountOfNodes;
-
-    Node *tmp = NULL;
-    if (size > 0) tmp = crocos->head;
-    for (int i = 0; i < size; ++i) {
-        if (((Croco *) tmp->data)->entity->id == Id) return;
-        tmp = tmp->nextNode;
-    }
-    createCroco(ropeNumber, isRedCroco, Id);
-}
-
-void createFruitID(int ropeNumber, int id) {
-    int size = fruits->amountOfNodes;
-
-    Node *tmp = NULL;
-    if (size > 0) tmp = fruits->head;
-    for (int i = 0; i < size; ++i) {
-        if (((Fruit *) tmp->data)->entity->id == id) return;
-        tmp = tmp->nextNode;
-    }
-    createFruit(ropeNumber, id);
-}
-
 int getRopePosition(int ropeColumn){
     if(ropeColumn >= ROPE_COLUMNS) return AMOUNT_OF_ROPES;
     float prevX = -1.0f;
@@ -304,7 +280,7 @@ void parseGame(json_char *json) {
     cJSON_ArrayForEach(croco, jsonCrocos) {
         int rope = cJSON_GetObjectItem(croco, "rope")->valueint;
         int id = cJSON_GetObjectItem(croco, "id")->valueint;
-        createCrocoID(rope, 0, id);
+        createCroco(rope, 0, id);
     }
 
     cJSON *fruit;
@@ -312,6 +288,6 @@ void parseGame(json_char *json) {
     cJSON_ArrayForEach(fruit, jsonFruits) {
         int rope = cJSON_GetObjectItem(fruit, "rope")->valueint;
         int id = cJSON_GetObjectItem(fruit, "id")->valueint;
-        createFruitID(rope, id);
+        createFruit(rope, id);
     }
 }

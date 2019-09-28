@@ -36,15 +36,19 @@ class JsonParser {
         ClientTab clientTab = ClientTabManager.searchClientTab(gameId);
         if (clientTab == null) return "";
 
+        // Crocos
         JSONArray crocosArray = new JSONArray();
         for (Croco croco : clientTab.getCrocos()) {
             crocosArray.put(croco.serialize());
         }
+        clientTab.getCrocos().clear();
 
+        // Fruits
         JSONArray fruitsArray = new JSONArray();
         for (Fruit fruit : clientTab.getFruits()) {
             fruitsArray.put(fruit.serialize());
         }
+        clientTab.getFruits().clear();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("crocos", crocosArray);
