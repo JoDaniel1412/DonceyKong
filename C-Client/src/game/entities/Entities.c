@@ -54,6 +54,7 @@ json_value *serializeCrocos(LinkedList *crocos) {
         updateRPoss(croco->entity);
         json_value *jsonEntity = serialize(croco->entity);
         json_array_push(arrayCrocos, jsonEntity);
+        tmp = tmp->nextNode;
     }
     return arrayCrocos;
 }
@@ -68,6 +69,7 @@ json_value *serializeFruits(LinkedList *fruits) {
         updateRPoss(fruit->entity);
         json_value *jsonEntity = serialize(fruit->entity);
         json_array_push(arrayFruits, jsonEntity);
+        tmp = tmp->nextNode;
     }
     return arrayFruits;
 }
